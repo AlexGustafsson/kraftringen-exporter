@@ -1,0 +1,9 @@
+{
+  "include": [
+    "auth/**/*.py"
+  ],
+  "venvPath": "venv",
+  "verboseOutput": true,
+  "typeCheckingMode": "strict",
+  "useLibraryCodeForTypes": true
+}
