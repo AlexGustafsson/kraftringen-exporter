@@ -5,7 +5,7 @@ import io
 import click
 from requests.sessions import RequestsCookieJar
 
-from auth import Authorizer
+from kraftringen import BankIDAuthorizer, API
 from sys import stderr
 
 
@@ -23,15 +23,9 @@ def format_cookies(cookies: RequestsCookieJar) -> str:
     return "\n".join(cookie_strings)
 
 
-@click.group()
-def main():
-    pass
-
-
-@click.command(help="Login to Kraftringen")
-def login():
+def authorize() -> requests.Session:
     session = requests.session()
-    authorizer = Authorizer(session)
+    authorizer = BankIDAuthorizer(session)
     authorizer.request_api_key()
     authorizer.request_start_token()
     url = authorizer.format_bankid_url()
@@ -43,7 +37,17 @@ def login():
     print(f.read(), file=stderr)
     authorizer.wait_for_signature()
     authorizer.login()
+    return session
 
+
+@click.group()
+def main():
+    pass
+
+
+@click.command(help="Login to Kraftringen")
+def login():
+    session = authorize()
     cookies = format_cookies(session.cookies)
     print(cookies)
 

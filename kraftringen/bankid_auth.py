@@ -51,7 +51,7 @@ class CustomerPinCodeResponse(TypedDict):
     d: str
 
 
-class Authorizer:
+class BankIDAuthorizer:
     def __init__(self, session: requests.Session) -> None:
         self.__session = session
         self.__api_key: str
