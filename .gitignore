@@ -11,3 +11,5 @@ cookies.txt
 
 # Ignore macOS DS Store files
 .DS_Store
+
+.vscode
